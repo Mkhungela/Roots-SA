@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+/* Self-hosted so the app renders identically offline — no Google Fonts request. */
+@import "@fontsource-variable/bricolage-grotesque/index.css";
+@import "@fontsource-variable/plus-jakarta-sans/index.css";
+
+@theme {
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
+
+  /* Soil, sun, bead and sky — a palette pulled from Ndebele wall painting,
+     Zulu beadwork and Basotho blankets. */
+  --color-soil-950: #0c0908;
+  --color-soil-900: #141010;
+  --color-soil-850: #1b1615;
+  --color-soil-800: #241d1b;
+  --color-soil-700: #352b28;
+  --color-soil-600: #4b3d38;
+  --color-soil-500: #6b574f;
+  --color-soil-400: #9b8278;
+  --color-soil-300: #c4ada3;
+  --color-soil-200: #e3d5cd;
+  --color-soil-100: #f4ece7;
+
+  --color-sun-400: #ffc24d;
+  --color-sun-500: #f5a623;
+  --color-sun-600: #d9850c;
+
+  --color-clay-400: #f0674a;
+  --color-clay-500: #e04524;
+  --color-clay-600: #bb3317;
+
+  --color-veld-400: #45c07a;
+  --color-veld-500: #22a35c;
+  --color-veld-600: #157f45;
+
+  --color-ink-400: #6d7cf0;
+  --color-ink-500: #4a5ae0;
+  --color-ink-600: #3542b8;
+
+  --color-bead-400: #ff5f9e;
+  --color-bead-500: #ec3b80;
+  --color-bead-600: #c7205f;
+
+  --color-sky-cyan: #2fc4d6;
+
+  --radius-card: 1.25rem;
+
+  --animate-rise: rise 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-fade: fade 0.4s ease both;
+  --animate-pulse-ring: pulse-ring 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-pop: pop 0.32s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(0.85); opacity: 0.75; }
+  70%  { transform: scale(1.9); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes pop {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+* { -webkit-tap-highlight-color: transparent; }
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-soil-950);
+  color: var(--color-soil-100);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
+}
+
+/* ---------- utilities ---------- */
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.thin-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+.thin-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-soil-700);
+  border-radius: 99px;
+}
+
+.snap-feed {
+  scroll-snap-type: y mandatory;
+  overscroll-behavior-y: contain;
+}
+.snap-feed > * { scroll-snap-align: start; scroll-snap-stop: always; }
+
+.text-balance { text-wrap: balance; }
+.text-pretty { text-wrap: pretty; }
+
+/* A thin beaded rule — the repeating motif that ties the sections together. */
+.bead-rule {
+  height: 6px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-clay-500) 0 10px,
+    var(--color-sun-500) 10px 20px,
+    var(--color-veld-500) 20px 30px,
+    var(--color-ink-500) 30px 40px,
+    var(--color-bead-500) 40px 50px
+  );
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
